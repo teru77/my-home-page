@@ -16,7 +16,7 @@ const Footer = () => {
       <Typography variant="body2" align="center">
         {"Copyright © "}
         <Link
-          sx={{ color: "inherit", textDecoration: "none" }}
+          sx={{ color: "inherit", textDecoration: "none", mr: 1 }}
           href="https://github.com/teru77"
         >
           Teru Nagamori

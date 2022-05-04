@@ -8,7 +8,7 @@ type Props = {
 const HeaderElement = (props: Props) => {
   const { text } = props;
   return (
-    <Scroll to={text} smooth={true} duration={600} offset={-50}>
+    <Scroll to={text} smooth={true} duration={600}>
       <ListItemText
         sx={{
           display: "inline-block",

@@ -4,11 +4,13 @@ type exType = {
   startDate: string;
   finishDate?: string;
   text: string;
+  GraduatedFlag: boolean;
 };
 const ex: exType = {
   startDate: "2018/4",
   finishDate: "2022/03",
   text: "東京都立大学システムデザイン学部情報科学科",
+  GraduatedFlag: true,
 };
 
 const Education = () => {
@@ -52,7 +54,11 @@ const Education = () => {
                   />
                 )}
               </Box>
-              <ListItemText primary={obj["text"]} />
+              {obj["GraduatedFlag"] ? (
+                <ListItemText primary={`${obj["text"]} 卒業`} />
+              ) : (
+                <ListItemText primary={`${obj["text"]} 卒業見込`} />
+              )}
             </Box>
           ))}
         </ListItem>
