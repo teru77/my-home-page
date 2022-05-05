@@ -1,25 +1,29 @@
 import { Box, Link, ListItemText, Typography } from "@mui/material";
-
-type exType = {
-  PublishedDate: string;
-  title: string;
-  ConferenceName: string;
-  url: string;
-};
-const ex: exType = {
-  PublishedDate: "2021/2",
-  title: "ac",
-  ConferenceName: "IEEE",
-  url: "https://github.com/teru77",
-};
+import { useEffect, useState } from "react";
+import db from "../firebase";
+import {
+  collection,
+  DocumentData,
+  getDocs,
+  orderBy,
+  query,
+} from "firebase/firestore";
 
 const Papers = () => {
+  const [papers, setPapers] = useState<DocumentData[]>([]);
+
+  useEffect(() => {
+    const paperData = collection(db, "papers");
+    const q = query(paperData, orderBy("timestamp", "desc"));
+    getDocs(q).then((querySnapshot) => {
+      setPapers(querySnapshot.docs.map((doc) => doc.data()));
+    });
+  }, []);
   return (
     <Box
       component="div"
       sx={{
         mx: "auto",
-        mt: 4,
         pt: 4,
       }}
     >
@@ -30,16 +34,13 @@ const Papers = () => {
         Papers
       </Typography>
 
-      {[ex, ex, ex, ex].map((obj, index) => (
+      {papers.map((paper, index) => (
         <Box key={index} component="div" sx={{ mb: 2 }}>
           <ListItemText
             sx={{ textDecoration: "underline" }}
-            primary={obj["PublishedDate"]}
+            primary={paper.PublishedDate}
           />
-          <ListItemText
-            sx={{ color: "gray" }}
-            primary={obj["ConferenceName"]}
-          />
+          <ListItemText sx={{ color: "gray" }} primary={paper.ConferenceName} />
           <ListItemText
             disableTypography
             primary={
@@ -47,7 +48,7 @@ const Papers = () => {
                 variant="body1"
                 sx={{ fontWeight: "bold", fontSize: 22 }}
               >
-                {obj["title"]}
+                {paper.Title}
               </Typography>
             }
           />
@@ -56,7 +57,7 @@ const Papers = () => {
               color: "inherit",
               ":hover": { color: "lightblue", cursor: "pointer" },
             }}
-            href={obj["url"]}
+            href={paper.URL}
           >
             URL
           </Link>

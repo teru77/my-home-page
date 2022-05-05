@@ -1,8 +1,10 @@
 import { Box, Link, Typography } from "@mui/material";
+import ScrollTopButton from "./ScrollTopButton";
 
 const Footer = () => {
   return (
     <Box
+      component="div"
       sx={{
         width: "100%",
         background: "linear-gradient(to right, #a8c0ff, #3f2b96)",

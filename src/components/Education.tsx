@@ -1,19 +1,25 @@
 import { Box, List, ListItem, ListItemText, Typography } from "@mui/material";
-
-type exType = {
-  startDate: string;
-  finishDate?: string;
-  text: string;
-  GraduatedFlag: boolean;
-};
-const ex: exType = {
-  startDate: "2018/4",
-  finishDate: "2022/03",
-  text: "東京都立大学システムデザイン学部情報科学科",
-  GraduatedFlag: true,
-};
+import { useEffect, useState } from "react";
+import db from "../firebase";
+import {
+  collection,
+  DocumentData,
+  getDocs,
+  orderBy,
+  query,
+} from "firebase/firestore";
 
 const Education = () => {
+  const [scholls, setScholls] = useState<DocumentData[]>([]);
+
+  useEffect(() => {
+    const educationData = collection(db, "education");
+    const q = query(educationData, orderBy("timestamp", "desc"));
+    getDocs(q).then((querySnapshot) => {
+      setScholls(querySnapshot.docs.map((doc) => doc.data()));
+    });
+  }, []);
+
   return (
     <Box
       component="div"
@@ -24,7 +30,12 @@ const Education = () => {
     >
       <Typography
         variant="h4"
-        sx={{ fontSize: 28, my: 2, textDecoration: "underline" }}
+        sx={{
+          fontSize: 28,
+          my: 2,
+          textDecoration: "underline",
+          fontWeight: "bold",
+        }}
       >
         Education
       </Typography>
@@ -36,28 +47,28 @@ const Education = () => {
             m: 0,
           }}
         >
-          {[ex, ex, ex, ex].map((obj, index) => (
+          {scholls.map((scholl, index) => (
             <Box key={index} component="div" sx={{ mb: 2 }}>
               <Box
                 component="div"
                 sx={{ display: "flex", alignItems: "center" }}
               >
-                {obj["finishDate"] ? (
+                {scholl.FinishDate ? (
                   <ListItemText
                     sx={{ textDecoration: "underline" }}
-                    primary={`${obj["startDate"]} - ${obj["finishDate"]}`}
+                    primary={`${scholl.StartDate} - ${scholl.FinishDate}`}
                   />
                 ) : (
                   <ListItemText
                     sx={{ textDecoration: "underline" }}
-                    primary={`${obj["startDate"]} - 現在`}
+                    primary={`${scholl.StartDate} - 現在`}
                   />
                 )}
               </Box>
-              {obj["GraduatedFlag"] ? (
-                <ListItemText primary={`${obj["text"]} 卒業`} />
+              {scholl.FinishDate ? (
+                <ListItemText primary={`${scholl.Name} 卒業`} />
               ) : (
-                <ListItemText primary={`${obj["text"]} 在学`} />
+                <ListItemText primary={`${scholl.Name} 在学`} />
               )}
             </Box>
           ))}

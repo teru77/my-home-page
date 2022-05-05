@@ -1,19 +1,25 @@
 import { Box, List, ListItem, ListItemText, Typography } from "@mui/material";
-
-type exType = {
-  startDate: string;
-  finishDate?: string;
-  text: string;
-  detail: string;
-};
-const ex: exType = {
-  startDate: "2021/10",
-  finishDate: "2022/05",
-  text: "株式会社アダコテック (機械学習インターン)",
-  detail: "異常検知のための位置補正",
-};
+import { useEffect, useState } from "react";
+import db from "../firebase";
+import {
+  collection,
+  DocumentData,
+  getDocs,
+  orderBy,
+  query,
+} from "firebase/firestore";
 
 const Works = () => {
+  const [works, setWorks] = useState<DocumentData[]>([]);
+
+  useEffect(() => {
+    const workData = collection(db, "works");
+    const q = query(workData, orderBy("timestamp", "desc"));
+    getDocs(q).then((querySnapshot) => {
+      setWorks(querySnapshot.docs.map((doc) => doc.data()));
+    });
+  }, []);
+
   return (
     <Box
       component="div"
@@ -26,7 +32,7 @@ const Works = () => {
         variant="h4"
         sx={{ fontSize: 28, my: 2, textDecoration: "underline" }}
       >
-        Works
+        Experience
       </Typography>
       <List sx={{ p: 0 }}>
         <ListItem
@@ -36,26 +42,36 @@ const Works = () => {
             m: 0,
           }}
         >
-          {[ex, ex, ex, ex].map((obj, index) => (
+          {works.map((work, index) => (
             <Box key={index} component="div" sx={{ mb: 2 }}>
               <Box
                 component="div"
                 sx={{ display: "flex", alignItems: "center" }}
               >
-                {obj["finishDate"] ? (
+                {work.FinishDate ? (
                   <ListItemText
                     sx={{ textDecoration: "underline" }}
-                    primary={`${obj["startDate"]} - ${obj["finishDate"]}`}
+                    primary={`${work.StartDate} - ${work.FinishDate}`}
                   />
                 ) : (
                   <ListItemText
                     sx={{ textDecoration: "underline" }}
-                    primary={`${obj["startDate"]} - 現在`}
+                    primary={`${work.StartDate} - 現在`}
                   />
                 )}
               </Box>
-              <ListItemText primary={obj["text"]} />
-              <ListItemText primary={obj["detail"]} />
+              <ListItemText
+                disableTypography
+                primary={
+                  <Typography
+                    variant="body1"
+                    sx={{ fontWeight: "bold", fontSize: 20 }}
+                  >
+                    {work.Name}
+                  </Typography>
+                }
+              />
+              <ListItemText primary={work.Detail} />
             </Box>
           ))}
         </ListItem>

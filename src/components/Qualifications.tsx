@@ -1,12 +1,24 @@
 import { Box, List, ListItem, ListItemText, Typography } from "@mui/material";
-
-type exType = {
-  receivedDate: string;
-  text: string;
-};
-const ex: exType = { receivedDate: "2021/2", text: "TOEIC 公開テスト 765点" };
+import { useEffect, useState } from "react";
+import db from "../firebase";
+import {
+  collection,
+  DocumentData,
+  getDocs,
+  orderBy,
+  query,
+} from "firebase/firestore";
 
 const Qualifications = () => {
+  const [qualifications, setQualifications] = useState<DocumentData[]>([]);
+
+  useEffect(() => {
+    const qualificationData = collection(db, "qualifications");
+    const q = query(qualificationData, orderBy("timestamp", "desc"));
+    getDocs(q).then((querySnapshot) => {
+      setQualifications(querySnapshot.docs.map((doc) => doc.data()));
+    });
+  }, []);
   return (
     <Box
       component="div"
@@ -30,13 +42,13 @@ const Qualifications = () => {
             m: 0,
           }}
         >
-          {[ex, ex, ex, ex].map((obj, index) => (
+          {qualifications.map((qualification, index) => (
             <Box key={index} component="div" sx={{ mb: 2 }}>
               <ListItemText
                 sx={{ textDecoration: "underline" }}
-                primary={obj["receivedDate"]}
+                primary={qualification.ReceivedDate}
               />
-              <ListItemText primary={obj["text"]} />
+              <ListItemText primary={qualification.Name} />
             </Box>
           ))}
         </ListItem>
