@@ -29,7 +29,12 @@ const Papers = () => {
     >
       <Typography
         variant="h4"
-        sx={{ fontSize: 28, my: 2, textDecoration: "underline" }}
+        sx={{
+          fontSize: 28,
+          my: 2,
+          textDecoration: "underline",
+          fontWeight: "bold",
+        }}
       >
         Papers
       </Typography>

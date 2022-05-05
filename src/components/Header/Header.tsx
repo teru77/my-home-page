@@ -27,7 +27,7 @@ const Header = () => {
       </Typography>
       <List>
         <ListItem>
-          {["About", "Education", "Works", "Papers", "Qualifications"].map(
+          {["About", "Education", "Experience", "Papers", "Qualifications"].map(
             (text, index) => (
               <HeaderElement key={index} text={text} />
             )

@@ -11,7 +11,7 @@ export const TemporaryDrawer = (props: Props) => {
     <Drawer anchor="right" open={props.open} onClose={props.onClose}>
       <Box sx={{ width: 250 }} role="presentation">
         <List sx={{ p: 0 }}>
-          {["About", "Education", "Work", "Papers", "Qualifications"].map(
+          {["About", "Education", "Experience", "Papers", "Qualifications"].map(
             (text, index) => (
               <ListItem
                 button

@@ -38,7 +38,7 @@ const ScrollTopButton = () => {
       sx={{
         position: "fixed",
         right: "5%",
-        bottom: "10%",
+        bottom: "8%",
         minWidth: "48px",
         minHeight: "48px",
         zIndex: 100,

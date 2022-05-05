@@ -12,6 +12,10 @@ const SkillCard = (props: Props) => {
         sx={{
           height: "150px",
           width: "150px",
+          "@media screen and (max-width:600px)": {
+            height: "80px",
+            width: "80px",
+          },
         }}
       >
         <CardMedia
