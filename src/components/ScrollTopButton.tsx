@@ -3,35 +3,28 @@ import { IconButton } from "@mui/material";
 import { useEffect, useState } from "react";
 import { animateScroll as scroll } from "react-scroll";
 
-const scrollTop = (): number => {
-  return Math.max(
-    window.pageYOffset,
-    document.documentElement.scrollTop,
-    document.body.scrollTop
-  );
-};
-
 const ScrollTopButton = () => {
   const scrollToTop = () => {
     scroll.scrollToTop();
   };
-  const [isTop, setIsTop] = useState<boolean>(true);
-
-  const onScroll = (): void => {
-    const position = scrollTop();
-    if (position >= 80) {
-      setIsTop(false);
-    } else {
-      setIsTop(true);
-    }
-  };
+  const [isTop, setIsTop] = useState<boolean>(false);
 
   useEffect(() => {
-    document.addEventListener("scroll", onScroll);
-    return (): void => document.removeEventListener("scroll", onScroll);
-  });
+    const scrollTop = () => {
+      if (window.scrollY >= 100) {
+        setIsTop(true);
+      } else {
+        setIsTop(false);
+      }
+    };
+    scrollTop();
+    window.addEventListener("scroll", scrollTop);
 
-  const Flag = isTop ? 0 : 1;
+    return () => {
+      window.removeEventListener("scroll", scrollTop);
+    };
+  }, []);
+
   return (
     <IconButton
       onClick={scrollToTop}
@@ -42,7 +35,8 @@ const ScrollTopButton = () => {
         minWidth: "48px",
         minHeight: "48px",
         zIndex: 100,
-        opacity: { Flag },
+        transition: "1.5s",
+        opacity: isTop ? 1 : 0,
       }}
     >
       <ArrowCircleUpRoundedIcon

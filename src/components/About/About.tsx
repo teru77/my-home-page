@@ -53,7 +53,7 @@ const About = () => {
         <Grid
           container
           spacing={3}
-          sx={{ display: "flex", justifyContent: "center" }}
+          sx={{ display: "flex", justifyContent: "space-around" }}
         >
           {Skills.map((skill, index) => (
             <SkillCard
