@@ -95,7 +95,11 @@ const About = () => {
       >
         スキル
       </Typography>
-      <Grid container spacing={4}>
+      <Grid
+        container
+        spacing={3}
+        sx={{ display: "flex", justifyContent: "center" }}
+      >
         {Skills.map((skill, index) => (
           <SkillCard key={index} image={skill["image"]} text={skill["text"]} />
         ))}

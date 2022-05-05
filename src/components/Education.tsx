@@ -57,7 +57,7 @@ const Education = () => {
               {obj["GraduatedFlag"] ? (
                 <ListItemText primary={`${obj["text"]} 卒業`} />
               ) : (
-                <ListItemText primary={`${obj["text"]} 卒業見込`} />
+                <ListItemText primary={`${obj["text"]} 在学`} />
               )}
             </Box>
           ))}

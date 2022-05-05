@@ -7,29 +7,33 @@ type Props = {
 const SkillCard = (props: Props) => {
   const { image, text } = props;
   return (
-    <Grid item sm={3} sx={{ margin: "auto" }}>
+    <Grid item>
       <Card
         sx={{
-          height: 200,
-          width: "80%",
-          margin: "theme.spacing(1)",
+          height: "150px",
+          width: "150px",
         }}
       >
         <CardMedia
           component="img"
           image={image}
-          alt="Paella dish"
+          alt="Logo"
           sx={{
-            height: "80%",
             objectFit: "fill",
+            display: "block",
+            height: "80%",
           }}
         />
-        <CardContent>
-          <Typography
-            variant="body2"
-            color="text.secondary"
-            sx={{ height: "20%", margin: "auto" }}
-          >
+        <CardContent
+          sx={{
+            height: "20%",
+            display: "flex",
+            p: 0,
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <Typography variant="body2" color="text.secondary">
             {text}
           </Typography>
         </CardContent>

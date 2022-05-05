@@ -7,6 +7,7 @@ import {
   Header,
   Papers,
   Qualifications,
+  ScrollButton,
   Works,
 } from "./components";
 
@@ -30,6 +31,7 @@ function App() {
         <section id="Qualifications">
           <Qualifications />
         </section>
+        <ScrollButton />
       </Box>
       <Footer />
     </div>
