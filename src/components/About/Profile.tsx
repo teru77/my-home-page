@@ -53,8 +53,8 @@ const Profile = () => {
         <br />
         貴家・塩田研究室に所属し、画像処理に関する研究を行なっています。
         <br />
-        主な研究テーマは、Semantic
-        SegmentationやObjectDetectionで用いられるDNNやTransformerを不正利用から保護する手法について研究しています。
+        主な研究テーマは、Semantic SegmentationやObject
+        Detectionで用いられるDNNやTransformerを不正利用から保護する手法について研究しています。
         <br />
         課外活動として、野球を小学1年生から大学3年生で引退するまでの約15年間続けていました。
         <br />
