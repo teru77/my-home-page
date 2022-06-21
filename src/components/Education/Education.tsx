@@ -1,6 +1,6 @@
 import { Box, List, ListItem, ListItemText, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
-import db from "../firebase";
+import db from "../../firebase";
 import {
   collection,
   DocumentData,
@@ -9,14 +9,14 @@ import {
   query,
 } from "firebase/firestore";
 
-const Works = () => {
-  const [works, setWorks] = useState<DocumentData[]>([]);
+const Education = () => {
+  const [schools, setSchools] = useState<DocumentData[]>([]);
 
   useEffect(() => {
-    const workData = collection(db, "works");
-    const q = query(workData, orderBy("timestamp", "desc"));
+    const educationData = collection(db, "education");
+    const q = query(educationData, orderBy("timestamp", "desc"));
     getDocs(q).then((querySnapshot) => {
-      setWorks(querySnapshot.docs.map((doc) => doc.data()));
+      setSchools(querySnapshot.docs.map((doc) => doc.data()));
     });
   }, []);
 
@@ -37,7 +37,7 @@ const Works = () => {
           fontWeight: "bold",
         }}
       >
-        Experience
+        Education
       </Typography>
       <List sx={{ p: 0 }}>
         <ListItem
@@ -47,36 +47,29 @@ const Works = () => {
             m: 0,
           }}
         >
-          {works.map((work, index) => (
+          {schools.map((school, index) => (
             <Box key={index} component="div" sx={{ mb: 2 }}>
               <Box
                 component="div"
                 sx={{ display: "flex", alignItems: "center" }}
               >
-                {work.FinishDate ? (
+                {school.FinishDate ? (
                   <ListItemText
                     sx={{ textDecoration: "underline" }}
-                    primary={`${work.StartDate} - ${work.FinishDate}`}
+                    primary={`${school.StartDate} - ${school.FinishDate}`}
                   />
                 ) : (
                   <ListItemText
                     sx={{ textDecoration: "underline" }}
-                    primary={`${work.StartDate} - 現在`}
+                    primary={`${school.StartDate} - 現在`}
                   />
                 )}
               </Box>
-              <ListItemText
-                disableTypography
-                primary={
-                  <Typography
-                    variant="body1"
-                    sx={{ fontWeight: "bold", fontSize: 20 }}
-                  >
-                    {work.Name}
-                  </Typography>
-                }
-              />
-              <ListItemText primary={work.Detail} />
+              {school.FinishDate ? (
+                <ListItemText primary={`${school.Name} 卒業`} />
+              ) : (
+                <ListItemText primary={`${school.Name} 在学`} />
+              )}
             </Box>
           ))}
         </ListItem>
@@ -85,4 +78,4 @@ const Works = () => {
   );
 };
 
-export default Works;
+export default Education;

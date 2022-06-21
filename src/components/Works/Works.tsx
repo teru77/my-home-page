@@ -1,6 +1,6 @@
 import { Box, List, ListItem, ListItemText, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
-import db from "../firebase";
+import db from "../../firebase";
 import {
   collection,
   DocumentData,
@@ -9,14 +9,14 @@ import {
   query,
 } from "firebase/firestore";
 
-const Education = () => {
-  const [scholls, setScholls] = useState<DocumentData[]>([]);
+const Works = () => {
+  const [works, setWorks] = useState<DocumentData[]>([]);
 
   useEffect(() => {
-    const educationData = collection(db, "education");
-    const q = query(educationData, orderBy("timestamp", "desc"));
+    const workData = collection(db, "works");
+    const q = query(workData, orderBy("timestamp", "desc"));
     getDocs(q).then((querySnapshot) => {
-      setScholls(querySnapshot.docs.map((doc) => doc.data()));
+      setWorks(querySnapshot.docs.map((doc) => doc.data()));
     });
   }, []);
 
@@ -37,7 +37,7 @@ const Education = () => {
           fontWeight: "bold",
         }}
       >
-        Education
+        Experience
       </Typography>
       <List sx={{ p: 0 }}>
         <ListItem
@@ -47,29 +47,36 @@ const Education = () => {
             m: 0,
           }}
         >
-          {scholls.map((scholl, index) => (
+          {works.map((work, index) => (
             <Box key={index} component="div" sx={{ mb: 2 }}>
               <Box
                 component="div"
                 sx={{ display: "flex", alignItems: "center" }}
               >
-                {scholl.FinishDate ? (
+                {work.FinishDate ? (
                   <ListItemText
                     sx={{ textDecoration: "underline" }}
-                    primary={`${scholl.StartDate} - ${scholl.FinishDate}`}
+                    primary={`${work.StartDate} - ${work.FinishDate}`}
                   />
                 ) : (
                   <ListItemText
                     sx={{ textDecoration: "underline" }}
-                    primary={`${scholl.StartDate} - 現在`}
+                    primary={`${work.StartDate} - 現在`}
                   />
                 )}
               </Box>
-              {scholl.FinishDate ? (
-                <ListItemText primary={`${scholl.Name} 卒業`} />
-              ) : (
-                <ListItemText primary={`${scholl.Name} 在学`} />
-              )}
+              <ListItemText
+                disableTypography
+                primary={
+                  <Typography
+                    variant="body1"
+                    sx={{ fontWeight: "bold", fontSize: 20 }}
+                  >
+                    {work.Name}
+                  </Typography>
+                }
+              />
+              <ListItemText primary={work.Detail} />
             </Box>
           ))}
         </ListItem>
@@ -78,4 +85,4 @@ const Education = () => {
   );
 };
 
-export default Education;
+export default Works;

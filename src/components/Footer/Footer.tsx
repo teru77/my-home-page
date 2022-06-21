@@ -1,5 +1,5 @@
 import { Box, Link, Typography } from "@mui/material";
-import ScrollTopButton from "./ScrollTopButton";
+import ScrollTopButton from "../ScrollTopButton";
 
 const Footer = () => {
   return (

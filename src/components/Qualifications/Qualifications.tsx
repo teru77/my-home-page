@@ -1,6 +1,6 @@
 import { Box, List, ListItem, ListItemText, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
-import db from "../firebase";
+import db from "../../firebase";
 import {
   collection,
   DocumentData,
